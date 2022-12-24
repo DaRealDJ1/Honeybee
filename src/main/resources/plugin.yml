@@ -1,0 +1,5 @@
+name: SkHoneybee
+version: '${project.version}'
+main: SkHoneybee.Honey
+depend: [Skript]
+api-version: 1.19
