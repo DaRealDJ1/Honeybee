@@ -1,4 +1,4 @@
-package SkHoneybee.Elements.Expressions;
+package SkHoneybee.elements.expressions;
 
 import SkHoneybee.MapManager;
 import ch.njol.skript.Skript;

@@ -1,6 +1,6 @@
-package SkHoneybee.Elements.Expressions;
+package SkHoneybee.elements.expressions;
 
-import SkHoneybee.Elements.Effects.CreateMap;
+import SkHoneybee.elements.effects.CreateMap;
 import ch.njol.skript.Skript;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.ExpressionType;

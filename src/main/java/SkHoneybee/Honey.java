@@ -18,7 +18,7 @@ public final class Honey extends JavaPlugin {
 
         try {
             //This will register all our syntax for us. Explained below
-            addon.loadClasses("SkHoneybee", "Elements");
+            addon.loadClasses("SkHoneybee", "elements");
         } catch (IOException e) {
             e.printStackTrace();
         }

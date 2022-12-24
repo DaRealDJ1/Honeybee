@@ -1,4 +1,4 @@
-package SkHoneybee.Elements.Effects;
+package SkHoneybee.elements.effects;
 
 import SkHoneybee.MapManager;
 import SkHoneybee.MapType;

@@ -1,4 +1,4 @@
-package SkHoneybee.Elements.Effects;
+package SkHoneybee.elements.effects;
 
 import SkHoneybee.MapManager;
 import SkHoneybee.MapType;
@@ -7,7 +7,6 @@ import ch.njol.skript.lang.Effect;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser;
 import ch.njol.util.Kleenean;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.event.Event;
 import org.jetbrains.annotations.Nullable;
