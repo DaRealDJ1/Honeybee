@@ -13,7 +13,7 @@ import javax.annotation.Nullable;
 
 public class AllMaps extends SimpleExpression<String> {
     static {
-        Skript.registerExpression(AllMaps.class, String.class, ExpressionType.SIMPLE, "Last [created] Map");
+        Skript.registerExpression(AllMaps.class, String.class, ExpressionType.SIMPLE, "All maps");
     }
 
 
