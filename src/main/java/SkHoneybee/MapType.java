@@ -67,12 +67,25 @@ public class MapType {
         MapView mapView = getMapView();
         MapCanvas mapCanvas = this.mapCanvas;
         Player player = this.player;
+        // Rgb check for 0,0,0
+        Boolean q = false;
+        //clear canvas to no background no colour or anything
+        mapView.getRenderers().clear();
+        MapType mapType = this;
         for (int x = 0; x < 128; x++) {
             for (int y = 0; y < 128; y++) {
-                mapCanvas.setPixelColor(x, y, getPixel(x, y));
-            }
-        }
-    }
+                if (mapType.getPixel(x, y) != null) {
+                    if (mapType.getPixel(x, y).getRed() < 2 && mapType.getPixel(x, y).getGreen() <2 && mapType.getPixel(x, y).getBlue() < 2) {
+                        // set colour to -1
+                        mapCanvas.setPixelColor(x, y, new java.awt.Color(0, 0, 0, 0));
+                        continue;
+
+
+                    }
+                    mapCanvas.setPixelColor(x, y, mapType.getPixel(x, y));
+                }
+            }}}
+
     public void remove() {
         HashMap<String, MapType> pixels = MapManager.pixels;
         pixels.remove(name);

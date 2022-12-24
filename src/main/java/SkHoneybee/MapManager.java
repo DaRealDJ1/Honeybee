@@ -12,7 +12,6 @@ public class MapManager {
 
     public static void render() {
         for (String key : renderQueue.keySet()) {
-            Bukkit.broadcastMessage("rendering " + key + " MAP:" + renderQueue);
             MapType mapType = renderQueue.get(key);
             mapType.render();
             renderQueue.remove(key);

@@ -1,4 +1,4 @@
-package SkHoneybee.Elements;
+package SkHoneybee.Elements.Effects;
 
 import SkHoneybee.MapManager;
 import SkHoneybee.MapType;
@@ -19,14 +19,13 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.MapMeta;
 import org.bukkit.map.*;
 import org.jetbrains.annotations.Nullable;
-import org.w3c.dom.css.RGBColor;
 
 import java.util.HashMap;
 
-public class createMap extends Effect {
-
+public class CreateMap extends Effect {
+    public static String lastmap = "Invalid";
     static {
-        Skript.registerEffect(createMap.class, "create map at %location% named %string% [With [background] [colour|color] %number%, %number%, %number%] facing %direction%");
+        Skript.registerEffect(CreateMap.class, "create map at %location% named %string% [With [background] [colour|color] %number%, %number%, %number%] facing %direction%");
     }
 
     private Expression<Location> location;
@@ -63,9 +62,20 @@ public class createMap extends Effect {
                     MapType mapType = pixels.get(key);
                     mapType.setMapCanvas(mapCanvas);
                     mapType.setPlayer(player);
+                    // clear the map of all pixels
+                    //mapView.removeRenderer(mapView.getRenderers().get(0));
                     for (int x = 0; x < 128; x++) {
                         for (int y = 0; y < 128; y++) {
-                            mapCanvas.setPixelColor(x, y, mapType.getPixel(x, y));
+                            if (mapType.getPixel(x, y) != null) {
+                                if (mapType.getPixel(x, y).getRed() < 2 && mapType.getPixel(x, y).getGreen() <2 && mapType.getPixel(x, y).getBlue() < 2) {
+                                    // set colour to -1
+                                    mapCanvas.setPixelColor(x, y, new java.awt.Color(0, 0, 0, 0));
+                                    continue;
+
+
+                                }
+                                mapCanvas.setPixelColor(x, y, mapType.getPixel(x, y));
+                            }
                         }}}}
         }
     }
@@ -107,25 +117,21 @@ public class createMap extends Effect {
         itemFrame.setSilent(true);
 
         // set 1000 random pixels to a random color
-        Bukkit.broadcastMessage("random time");
         // check if map already exists
         MapType mapType = new MapType();
         mapType.setEntity((ItemFrame) map);
         mapType.setName(string.getSingle(event));
         mapType.setMapView(mapView);
         // set pixels x 0-127, y 0-127 to R, G, B
-        if (r != null && g != null && b != null) {
+        if (!r.equals(1) && !g.equals(1) && !b.equals(1)) {
             for (int x = 0; x < 128; x++) {
                 for (int y = 0; y < 128; y++) {
                     mapType.setPixel(x, y, r.getSingle(event).intValue(), g.getSingle(event).intValue(), b.getSingle(event).intValue());
                 }
             }
         }
-        System.out.println("Map: " + mapType.getPixels());
-        Bukkit.broadcastMessage("Pixels: " + mapType.getPixels().size());
         MapManager.pixels.put(string.getSingle(event), mapType);
-        Bukkit.broadcastMessage("Map created");
-
+        lastmap = string.getSingle(event);
         // render the map
         mapType.render();
     }

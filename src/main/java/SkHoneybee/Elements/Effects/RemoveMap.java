@@ -1,4 +1,4 @@
-package SkHoneybee.Elements;
+package SkHoneybee.Elements.Effects;
 
 import SkHoneybee.MapManager;
 import SkHoneybee.MapType;
@@ -12,11 +12,9 @@ import org.bukkit.entity.ItemFrame;
 import org.bukkit.event.Event;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.HashMap;
-
-public class removeMap extends Effect {
+public class RemoveMap extends Effect {
     static {
-        Skript.registerEffect(removeMap.class, "Remove map %string%");
+        Skript.registerEffect(RemoveMap.class, "Remove map %string%");
     }
 
     private Expression<String> name;
@@ -30,15 +28,13 @@ public class removeMap extends Effect {
 
     @Override
     public String toString(@Nullable Event event, boolean debug) {
-        return "";//return "Kick player effect with expression player: " + player.toString(event, debug) + " and string expression: " + reason.toString(event, debug);
+        return "RemoveMap";//return "Kick player effect with expression player: " + player.toString(event, debug) + " and string expression: " + reason.toString(event, debug);
     }
     @Override
     protected void execute(Event event) {
-        Bukkit.broadcastMessage("NAME: " + name.getSingle(event));
         MapType mapManager = MapManager.pixels.get(name.getSingle(event));
         ItemFrame itemFrame = mapManager.getEntity();
         itemFrame.remove();
-        Bukkit.broadcastMessage("FRAME: " + itemFrame);
         MapManager.pixels.remove(name.getSingle(event));
     }
 
