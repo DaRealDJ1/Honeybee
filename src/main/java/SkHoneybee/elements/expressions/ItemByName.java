@@ -9,6 +9,7 @@ import ch.njol.skript.lang.ExpressionType;
 import ch.njol.skript.lang.SkriptParser;
 import ch.njol.skript.lang.util.SimpleExpression;
 import ch.njol.util.Kleenean;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
 import org.bukkit.event.Event;
 import org.bukkit.inventory.ItemStack;
@@ -17,10 +18,10 @@ import javax.annotation.Nullable;
 
 public class ItemByName extends SimpleExpression<ItemStack> {
     static {
-        Skript.registerExpression(ItemByName.class, ItemStack.class, ExpressionType.SIMPLE, "Item from [Map] %-string%");
+        Skript.registerExpression(ItemByName.class, ItemStack.class, ExpressionType.SIMPLE, "Item from %string%");
     }
+    private Expression<String> server;
 
-    private Expression<String> name;
     @Override
     public Class<? extends ItemStack> getReturnType() {
         return ItemStack.class;
@@ -34,18 +35,22 @@ public class ItemByName extends SimpleExpression<ItemStack> {
     @SuppressWarnings("unchecked")
     @Override
     public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, SkriptParser.ParseResult parser) {
+        server = (Expression<String>) exprs[0];
         return true;
     }
 
     @Override
     public String toString(@Nullable Event event, boolean debug) {
-        return "Item from map";
+        return "bungee total of " + (this.server != null ? this.server.toString(event,debug) : " all servers");
     }
 
     @Override
+    @Nullable
     protected ItemStack[] get(Event e) {
-        MapType map = MapManager.pixels.get(name.getSingle(e));
-        if (map == null) return null;
-        return new ItemStack[]{map.getItem()};
+        MapType mapType = MapManager.pixels.get(server.getSingle(e));
+        if (mapType == null) {
+            return null;
+        }
+        return new ItemStack[]{mapType.getItem()};
     }
 }
