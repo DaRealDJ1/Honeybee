@@ -62,21 +62,9 @@ public class CreateMap extends Effect {
                     MapType mapType = pixels.get(key);
                     mapType.setMapCanvas(mapCanvas);
                     mapType.setPlayer(player);
-                    // clear the map of all pixels
-                    //mapView.removeRenderer(mapView.getRenderers().get(0));
-                    for (int x = 0; x < 128; x++) {
-                        for (int y = 0; y < 128; y++) {
-                            if (mapType.getPixel(x, y) != null) {
-                                if (mapType.getPixel(x, y).getRed() < 2 && mapType.getPixel(x, y).getGreen() <2 && mapType.getPixel(x, y).getBlue() < 2) {
-                                    // set colour to -1
-                                    mapCanvas.setPixelColor(x, y, new java.awt.Color(0, 0, 0, 0));
-                                    continue;
-
-
-                                }
-                                mapCanvas.setPixelColor(x, y, mapType.getPixel(x, y));
-                            }
-                        }}}}
+                    mapType.render();
+                }
+            }
         }
     }
 

@@ -7,6 +7,7 @@ import ch.njol.skript.lang.Effect;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser;
 import ch.njol.util.Kleenean;
+import org.bukkit.Bukkit;
 import org.bukkit.event.Event;
 import org.jetbrains.annotations.Nullable;
 
@@ -41,6 +42,7 @@ public class SetPixel extends Effect {
     @Override
     protected void execute(Event event) {
         MapType mapType = MapManager.pixels.get(name.getSingle(event));
+        Bukkit.broadcastMessage("editing " + mapType);
         mapType.setPixel(x.getSingle(event).intValue(), y.getSingle(event).intValue(), r.getSingle(event).intValue(), g.getSingle(event).intValue(), b.getSingle(event).intValue());
         mapType.queueRender();
     }

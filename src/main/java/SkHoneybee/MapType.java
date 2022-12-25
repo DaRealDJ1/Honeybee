@@ -3,6 +3,7 @@ package SkHoneybee;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.map.MapCanvas;
 import org.bukkit.map.MapView;
 
@@ -16,23 +17,28 @@ public class MapType {
     MapCanvas mapCanvas;
     Player player;
     ItemFrame itemFrame;
-    public static HashMap<String, Color> pixels = new HashMap<>();
+    HashMap<String, Color> pixels = new HashMap<>();
     public String getName() {
         return name;
     }
     public void setName(String name) {
         this.name = name;
     }
+    public ItemStack getItem() {
+        ItemFrame e = itemFrame;
+        ItemStack item = e.getItem();
+        return item;
+    }
     public HashMap<String, Color> getPixels() {
         return pixels;
     }
-    public static Color getPixel(int x, int y) {
+    public Color getPixel(int x, int y) {
         return pixels.get(x + "," + y);
     }
-    public static void setPixel(int x, int y, int r, int g, int b) {
+    public void setPixel(int x, int y, int r, int g, int b) {
         pixels.put(x + "," + y, new Color(r, g, b));
     }
-    public static void setPixel(int x, int y, Color color) {
+    public void setPixel(int x, int y, Color color) {
         pixels.put(x + "," + y, color);
     }
     public MapView getMapView() {
@@ -56,12 +62,14 @@ public class MapType {
     public ItemFrame getEntity() {
         return this.itemFrame;
     }
+    public MapType getMapType() {
+        return this;
+    }
 
     // render
     public void queueRender() {
         HashMap<String, MapType> renderQueue = MapManager.renderQueue;
         renderQueue.put(name, this);
-
     }
     public void render() {
         MapView mapView = getMapView();
@@ -71,13 +79,16 @@ public class MapType {
         Boolean q = false;
         //clear canvas to no background no colour or anything
         mapView.getRenderers().clear();
-        MapType mapType = this;
+        MapType mapType = getMapType();
         for (int x = 0; x < 128; x++) {
             for (int y = 0; y < 128; y++) {
                 if (mapType.getPixel(x, y) != null) {
                     if (mapType.getPixel(x, y).getRed() < 2 && mapType.getPixel(x, y).getGreen() <2 && mapType.getPixel(x, y).getBlue() < 2) {
                         // set colour to -1
-                        mapCanvas.setPixelColor(x, y, new java.awt.Color(0, 0, 0, 0));
+                        try {
+                            mapCanvas.setPixelColor(x, y, new java.awt.Color(0, 0, 0, 0));
+                        } catch (Exception ignored) {
+                        }
                         continue;
 
 
@@ -85,9 +96,4 @@ public class MapType {
                     mapCanvas.setPixelColor(x, y, mapType.getPixel(x, y));
                 }
             }}}
-
-    public void remove() {
-        HashMap<String, MapType> pixels = MapManager.pixels;
-        pixels.remove(name);
-    }
 }
