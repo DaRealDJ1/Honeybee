@@ -5,6 +5,7 @@ import SkHoneybee.MapType;
 import ch.njol.skript.Skript;
 import ch.njol.skript.lang.Effect;
 import ch.njol.skript.lang.Expression;
+import ch.njol.skript.util.Color;
 import ch.njol.skript.util.Direction;
 import org.bukkit.*;
 import org.bukkit.block.BlockFace;
@@ -25,15 +26,13 @@ import java.util.HashMap;
 public class CreateMap extends Effect {
     public static String lastmap = "Invalid";
     static {
-        Skript.registerEffect(CreateMap.class, "create map at %location% named %string% [With [background] [colour|color] %number%, %number%, %number%] facing %direction%");
+        Skript.registerEffect(CreateMap.class, "create map at %location% named %string% [With [background] [colour|color] %color%] facing %direction%");
     }
 
     private Expression<Location> location;
     private Expression<String> string;
 
-    private Expression<Number> r;
-    private Expression<Number> g;
-    private Expression<Number> b;
+    private Expression<Color> rgb;
 
     private Expression<Direction> direction;
 
@@ -42,10 +41,8 @@ public class CreateMap extends Effect {
     public boolean init(Expression<?>[] expressions, int matchedPattern, Kleenean isDelayed, ParseResult parser) {
         this.location = (Expression<Location>) expressions[0];
         this.string = (Expression<String>) expressions[1];
-        this.r = (Expression<Number>) expressions[2];
-        this.g = (Expression<Number>) expressions[3];
-        this.b = (Expression<Number>) expressions[4];
-        this.direction = (Expression<Direction>) expressions[5];
+        this.rgb = (Expression<Color>) expressions[2];
+        this.direction = (Expression<Direction>) expressions[3];
         return true;
     }
 
@@ -111,10 +108,15 @@ public class CreateMap extends Effect {
         mapType.setName(string.getSingle(event));
         mapType.setMapView(mapView);
         // set pixels x 0-127, y 0-127 to R, G, B
-        if (!r.equals(1) && !g.equals(1) && !b.equals(1)) {
+
+        Color color = rgb.getSingle(event);
+        int r = color.asBukkitColor().getRed();
+        int g = color.asBukkitColor().getGreen();
+        int b = color.asBukkitColor().getBlue();
+        if (!(r == (1)) && !(g == (1)) && !(b == (1))) {
             for (int x = 0; x < 128; x++) {
                 for (int y = 0; y < 128; y++) {
-                    mapType.setPixel(x, y, r.getSingle(event).intValue(), g.getSingle(event).intValue(), b.getSingle(event).intValue());
+                    mapType.setPixel(x, y, r, g, b);
                 }
             }
         }

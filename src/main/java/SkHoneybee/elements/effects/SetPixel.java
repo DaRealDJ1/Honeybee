@@ -6,22 +6,23 @@ import ch.njol.skript.Skript;
 import ch.njol.skript.lang.Effect;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser;
+import ch.njol.skript.util.Color;
 import ch.njol.util.Kleenean;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Event;
 import org.jetbrains.annotations.Nullable;
 
+import java.awt.*;
+
 public class SetPixel extends Effect {
     static {
-        Skript.registerEffect(SetPixel.class, "Set pixel [at] %number%, %number% [on] [map] %string% to [colour|color] %number%, %number%, %number%");
+        Skript.registerEffect(SetPixel.class, "Set pixel [at] %number%, %number% [on] [map] %string% to %color%");
     }
 
     private Expression<Number> x;
     private Expression<Number> y;
     private Expression<String> name;
-    private Expression<Number> r;
-    private Expression<Number> b;
-    private Expression<Number> g;
+    private Expression<ch.njol.skript.util.Color> rgb;
 
     @SuppressWarnings("unchecked")
     @Override
@@ -29,9 +30,7 @@ public class SetPixel extends Effect {
         this.x = (Expression<Number>) expressions[0];
         this.y = (Expression<Number>) expressions[1];
         this.name = (Expression<String>) expressions[2];
-        this.r = (Expression<Number>) expressions[3];
-        this.g = (Expression<Number>) expressions[4];
-        this.b = (Expression<Number>) expressions[5];
+        this.rgb = (Expression<Color>) expressions[3];
         return true;
     }
 
@@ -41,9 +40,15 @@ public class SetPixel extends Effect {
     }
     @Override
     protected void execute(Event event) {
+        Color color = rgb.getSingle(event);
+        int r = color.asBukkitColor().getRed();
+        int g = color.asBukkitColor().getGreen();
+        int b = color.asBukkitColor().getBlue();
+
+
         MapType mapType = MapManager.pixels.get(name.getSingle(event));
         Bukkit.broadcastMessage("editing " + mapType);
-        mapType.setPixel(x.getSingle(event).intValue(), y.getSingle(event).intValue(), r.getSingle(event).intValue(), g.getSingle(event).intValue(), b.getSingle(event).intValue());
+        mapType.setPixel(x.getSingle(event).intValue(), y.getSingle(event).intValue(), r, g, b);
         mapType.queueRender();
     }
 
