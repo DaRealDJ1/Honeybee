@@ -16,7 +16,7 @@ import java.awt.*;
 
 public class SetPixel extends Effect {
     static {
-        Skript.registerEffect(SetPixel.class, "Set pixel [at] %number%, %number% [on] [map] %string% to %color%");
+        Skript.registerEffect(SetPixel.class, "Set pixel [at] %number%, %number% [on] [of] [map] %string% to %color%");
     }
 
     private Expression<Number> x;
