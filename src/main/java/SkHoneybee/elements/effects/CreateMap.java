@@ -26,7 +26,7 @@ import java.util.HashMap;
 public class CreateMap extends Effect {
     public static String lastmap = "Invalid";
     static {
-        Skript.registerEffect(CreateMap.class, "create map at %location% named %string% [With [background] [colour|color] %color%] facing %direction%");
+        Skript.registerEffect(CreateMap.class, "create map at %location% named %string% [With [background] [colour|color] %-color%] facing %direction%");
     }
 
     private Expression<Location> location;
@@ -109,10 +109,16 @@ public class CreateMap extends Effect {
         mapType.setMapView(mapView);
         // set pixels x 0-127, y 0-127 to R, G, B
 
-        Color color = rgb.getSingle(event);
-        int r = color.asBukkitColor().getRed();
-        int g = color.asBukkitColor().getGreen();
-        int b = color.asBukkitColor().getBlue();
+        int r = 1;
+        int g = 1;
+        int b = 1;
+        try {
+            Color color = rgb.getSingle(event);
+            r = color.asBukkitColor().getRed();
+            g = color.asBukkitColor().getGreen();
+            b = color.asBukkitColor().getBlue();
+        } catch (Exception ignored) {
+        }
         if (!(r == (1)) && !(g == (1)) && !(b == (1))) {
             for (int x = 0; x < 128; x++) {
                 for (int y = 0; y < 128; y++) {

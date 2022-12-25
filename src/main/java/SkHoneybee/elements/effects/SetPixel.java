@@ -40,16 +40,22 @@ public class SetPixel extends Effect {
     }
     @Override
     protected void execute(Event event) {
-        Color color = rgb.getSingle(event);
-        int r = color.asBukkitColor().getRed();
-        int g = color.asBukkitColor().getGreen();
-        int b = color.asBukkitColor().getBlue();
+        try {
+            Color color = rgb.getSingle(event);
+            int r = color.asBukkitColor().getRed();
+            int g = color.asBukkitColor().getGreen();
+            int b = color.asBukkitColor().getBlue();
 
 
-        MapType mapType = MapManager.pixels.get(name.getSingle(event));
-        Bukkit.broadcastMessage("editing " + mapType);
-        mapType.setPixel(x.getSingle(event).intValue(), y.getSingle(event).intValue(), r, g, b);
-        mapType.queueRender();
+            MapType mapType = MapManager.pixels.get(name.getSingle(event));
+            mapType.setPixel(x.getSingle(event).intValue(), y.getSingle(event).intValue(), r, g, b);
+            mapType.queueRender();
+        } catch (Exception e) {
+            if (!StopErrors.stoperrors) {
+                Bukkit.getLogger().warning("Error in set pixel effect: " + e.getMessage());
+                Skript.error("Erorr setting pixel, belief is that the map is not set, if this is not the case please report this error to the developer with following error: " + e.getMessage());
+            }
+        }
     }
 
 }
