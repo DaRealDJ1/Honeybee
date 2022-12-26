@@ -37,7 +37,6 @@ public class StopErrors extends Effect {
         try {
             // loop through MapManager.pixels
             for (MapType mapType : MapManager.pixels.values()) {
-                Bukkit.broadcastMessage("BYTES: " + mapType.serialize());
                 break;
             }} catch (Exception ignored) {}
         if (b.getSingle(event)) {

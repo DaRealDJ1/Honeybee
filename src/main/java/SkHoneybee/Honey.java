@@ -22,7 +22,11 @@ public final class Honey extends JavaPlugin {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
+        try {
+            SaveData.load();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         // 1 second bukkit schedular
         getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
             @Override
@@ -34,6 +38,6 @@ public final class Honey extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        // Plugin shutdown logic
+        SaveData.save();
     }
 }

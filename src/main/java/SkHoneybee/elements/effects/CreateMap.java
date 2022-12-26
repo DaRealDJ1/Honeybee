@@ -2,6 +2,7 @@ package SkHoneybee.elements.effects;
 
 import SkHoneybee.MapManager;
 import SkHoneybee.MapType;
+import SkHoneybee.SaveData;
 import ch.njol.skript.Skript;
 import ch.njol.skript.lang.Effect;
 import ch.njol.skript.lang.Expression;
@@ -50,15 +51,32 @@ public class CreateMap extends Effect {
     public String toString(@Nullable Event event, boolean debug) {
         return "";//return "Kick player effect with expression player: " + player.toString(event, debug) + " and string expression: " + reason.toString(event, debug);
     }
-    private class render extends MapRenderer {
+    public static class render extends MapRenderer {
         @Override
         public void render(MapView mapView, MapCanvas mapCanvas, Player player) {
+            Bukkit.broadcastMessage("Render start " + mapView.getId());
             HashMap<String, MapType> pixels = MapManager.pixels;
             for (String key : pixels.keySet()) {
                 if (pixels.get(key).getMapView() == mapView) {
                     MapType mapType = pixels.get(key);
                     mapType.setMapCanvas(mapCanvas);
                     mapType.setPlayer(player);
+                    if (SaveData.isLoading) {
+                        Bukkit.broadcastMessage("Setting pixels");
+                        mapType.setPixels(SaveData.loadPixels.get(key));
+                    }
+                    Bukkit.broadcastMessage("Rendering map");
+                    mapType.render();
+                } else if (SaveData.isLoading) {
+                    Bukkit.broadcastMessage("Doing stuff method 2");
+                    MapType mapType = pixels.get(key);
+                    mapType.setMapCanvas(mapCanvas);
+                    mapType.setPlayer(player);
+                    if (SaveData.isLoading) {
+                        Bukkit.broadcastMessage("Setting pixels");
+                        mapType.setPixels(SaveData.loadPixels.get(key));
+                    }
+                    Bukkit.broadcastMessage("Rendering map");
                     mapType.render();
                 }
             }

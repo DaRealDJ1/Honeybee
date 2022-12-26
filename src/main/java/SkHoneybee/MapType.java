@@ -6,11 +6,13 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.map.MapCanvas;
 import org.bukkit.map.MapView;
+import org.bukkit.util.io.BukkitObjectInputStream;
 
 import java.awt.*;
+import java.io.*;
 import java.util.HashMap;
 
-public class MapType {
+public class MapType implements Serializable {
 
     String name;
     MapView mapView;
@@ -38,8 +40,8 @@ public class MapType {
     public void setPixel(int x, int y, int r, int g, int b) {
         pixels.put(x + "," + y, new Color(r, g, b));
     }
-    public void setPixel(int x, int y, Color color) {
-        pixels.put(x + "," + y, color);
+    public void setPixels(HashMap<String, Color> pixels) {
+        this.pixels = pixels;
     }
     public MapView getMapView() {
         return mapView;
