@@ -1,10 +1,13 @@
 package SkHoneybee;
 
+import SkHoneybee.Events.mapEvent;
 import ch.njol.skript.Skript;
 import ch.njol.skript.SkriptAddon;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 
 public final class Honey extends JavaPlugin {
     Honey instance;
@@ -15,29 +18,34 @@ public final class Honey extends JavaPlugin {
         addon = Skript.registerAddon(this);
         // Plugin startup logic
         getLogger().info("Honeybee is now enabled!");
+        getServer().getPluginManager().registerEvents(new mapEvent(), this);
 
         try {
             //This will register all our syntax for us. Explained below
-            addon.loadClasses("SkHoneybee", "elements");
+            addon.loadClasses("SkHoneybee", "Elements");
         } catch (IOException e) {
             e.printStackTrace();
         }
-        try {
-            SaveData.load();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        // 1 second bukkit schedular
-        getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
-            @Override
-            public void run() {
-                MapManager.render();
+
+        // loop all files in the folder
+        File f = new File("plugins/SkHoneybee/Maps");
+        File[] matchingFiles = f.listFiles();
+        for (File file : matchingFiles) {
+            Manager manager = new Manager();
+            try {
+                manager.Load(file.getName());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
-        }, 0L, 1L);
+        }
     }
 
     @Override
     public void onDisable() {
-        SaveData.save();
+        HashMap<String, Manager> maps = Manager.maps;
+        for (String name : maps.keySet()) {
+            Manager manager = maps.get(name);
+            manager.Save();
+        }
     }
 }

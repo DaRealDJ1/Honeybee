@@ -1,7 +1,7 @@
 name: SkHoneybee
 version: '${project.version}'
 main: SkHoneybee.Honey
-depend: [Skript]
-author: DjDisaster [Certified Idiot]
-description: Adds new map stuff for skript ehm.. prety cool ig this took me 7 hours...
+depend:
+  - Skript
+
 api-version: 1.19

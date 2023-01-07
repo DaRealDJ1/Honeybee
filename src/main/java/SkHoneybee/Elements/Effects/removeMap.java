@@ -1,19 +1,19 @@
-package SkHoneybee.elements.effects;
+package SkHoneybee.Elements.Effects;
 
-import SkHoneybee.MapManager;
-import SkHoneybee.MapType;
+import SkHoneybee.Manager;
 import ch.njol.skript.Skript;
 import ch.njol.skript.lang.Effect;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser;
 import ch.njol.util.Kleenean;
-import org.bukkit.entity.ItemFrame;
 import org.bukkit.event.Event;
 import org.jetbrains.annotations.Nullable;
 
-public class RemoveMap extends Effect {
+import java.util.HashMap;
+
+public class removeMap extends Effect {
     static {
-        Skript.registerEffect(RemoveMap.class, "Remove map %string%");
+        Skript.registerEffect(removeMap.class, "remove map named %string%");
     }
 
     private Expression<String> name;
@@ -27,14 +27,14 @@ public class RemoveMap extends Effect {
 
     @Override
     public String toString(@Nullable Event event, boolean debug) {
-        return "RemoveMap";//return "Kick player effect with expression player: " + player.toString(event, debug) + " and string expression: " + reason.toString(event, debug);
-    }
-    @Override
-    protected void execute(Event event) {
-        MapType mapManager = MapManager.pixels.get(name.getSingle(event));
-        ItemFrame itemFrame = mapManager.getEntity();
-        itemFrame.remove();
-        MapManager.pixels.remove(name.getSingle(event));
+        return "";//return "Kick player effect with expression player: " + player.toString(event, debug) + " and string expression: " + reason.toString(event, debug);
     }
 
+    @Override
+    protected void execute(Event event) {
+        Manager map = Manager.maps.get(name.getSingle(event));
+        map.Remove();
+        Manager.maps.remove(name.getSingle(event));
+
+    }
 }

@@ -1,24 +1,20 @@
-package SkHoneybee.elements.expressions;
+package SkHoneybee.Elements.Expressions;
 
-import SkHoneybee.MapManager;
-import SkHoneybee.MapType;
-import SkHoneybee.elements.effects.CreateMap;
+import SkHoneybee.Manager;
 import ch.njol.skript.Skript;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.ExpressionType;
 import ch.njol.skript.lang.SkriptParser;
 import ch.njol.skript.lang.util.SimpleExpression;
 import ch.njol.util.Kleenean;
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Entity;
 import org.bukkit.event.Event;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nullable;
 
-public class ItemByName extends SimpleExpression<ItemStack> {
+public class mapByName extends SimpleExpression<ItemStack> {
     static {
-        Skript.registerExpression(ItemByName.class, ItemStack.class, ExpressionType.SIMPLE, "Item from %string%");
+        Skript.registerExpression(mapByName.class, ItemStack.class, ExpressionType.SIMPLE, "Item from %string%");
     }
     private Expression<String> server;
 
@@ -47,10 +43,6 @@ public class ItemByName extends SimpleExpression<ItemStack> {
     @Override
     @Nullable
     protected ItemStack[] get(Event e) {
-        MapType mapType = MapManager.pixels.get(server.getSingle(e));
-        if (mapType == null) {
-            return null;
-        }
-        return new ItemStack[]{mapType.getItem()};
+           return new ItemStack[]{Manager.maps.get(server.getSingle(e)).item()};
     }
 }
