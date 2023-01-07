@@ -154,14 +154,14 @@ public class Manager implements Serializable {
         mapView.addRenderer(new MapRenderer() {
             @Override
             public void render(@NotNull MapView mapView, @NotNull MapCanvas mapCanvas, @NotNull Player player) {
-                    for (int x = 0; x < 128; x++) {
-                        for (int y = 0; y < 128; y++) {
-                            mapCanvas.setPixel(x, y, (byte) 0);
-                        }
+                for (int x = 0; x < 128; x++) {
+                    for (int y = 0; y < 128; y++) {
+                        mapCanvas.setPixel(x, y, (byte) 0);
                     }
-                    mapView.getRenderers().clear();
                 }
-            });
+                mapView.getRenderers().clear();
+            }
+        });
 
     }
 }

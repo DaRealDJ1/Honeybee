@@ -43,6 +43,6 @@ public class mapByName extends SimpleExpression<ItemStack> {
     @Override
     @Nullable
     protected ItemStack[] get(Event e) {
-           return new ItemStack[]{Manager.maps.get(server.getSingle(e)).item()};
+        return new ItemStack[]{Manager.maps.get(server.getSingle(e)).item()};
     }
 }
