@@ -15,10 +15,10 @@ import java.util.HashMap;
 
 // make this class serializable
 
-public class Manager implements Serializable {
+public class MapManager implements Serializable {
     // serilization id for this class = 1
     private static final long serialVersionUID = 6L;
-    public static HashMap<String, Manager> maps = new HashMap<String, Manager>();
+    public static HashMap<String, MapManager> maps = new HashMap<String, MapManager>();
     public String name;
     public int id = 0;
     public HashMap<String, Color> pixels;
@@ -43,6 +43,9 @@ public class Manager implements Serializable {
         this.pixels = new HashMap<String, Color>();
         maps.put(name, this);
         CreateMap();
+    }
+    public Number GetId() {
+        return id;
     }
     public void CreateMap() {
         ItemStack mapItem = new ItemStack(Material.FILLED_MAP);
@@ -118,13 +121,13 @@ public class Manager implements Serializable {
         try {
             FileInputStream fis = new FileInputStream(f);
             ObjectInputStream ois = new ObjectInputStream(fis);
-            Manager manager = (Manager) ois.readObject();
+            MapManager mapManager = (MapManager) ois.readObject();
             ois.close();
             fis.close();
             String name1 = name.replace(".map", "");
-            maps.put(name1, manager);
-            pixels = manager.pixels;
-            id = manager.id;
+            maps.put(name1, mapManager);
+            pixels = mapManager.pixels;
+            id = mapManager.id;
             CreateMap();
         } catch (FileNotFoundException e) {
             System.out.println(1);

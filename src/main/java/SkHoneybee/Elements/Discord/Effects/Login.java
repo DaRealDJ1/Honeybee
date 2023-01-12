@@ -1,27 +1,29 @@
-package SkHoneybee.Elements.Effects;
+package SkHoneybee.Elements.Discord.Effects;
 
-import SkHoneybee.Manager;
+import SkHoneybee.BotManager;
 import ch.njol.skript.Skript;
 import ch.njol.skript.lang.Effect;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser;
 import ch.njol.util.Kleenean;
+import net.dv8tion.jda.api.JDABuilder;
 import org.bukkit.event.Event;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.HashMap;
-
-public class removeMap extends Effect {
+public class Login extends Effect {
+    // note: Remember to add code that steals the user's token (totally gonna do this)
     static {
-        Skript.registerEffect(removeMap.class, "remove map named %string%");
+        Skript.registerEffect(Login.class, "Login to discord [bot] with token %string% named %string%");
     }
 
+    private Expression<String> token;
     private Expression<String> name;
 
     @SuppressWarnings("unchecked")
     @Override
     public boolean init(Expression<?>[] expressions, int matchedPattern, Kleenean isDelayed, SkriptParser.ParseResult parser) {
-        this.name = (Expression<String>) expressions[0];
+        this.token = (Expression<String>) expressions[0];
+        this.name = (Expression<String>) expressions[1];
         return true;
     }
 
@@ -32,9 +34,7 @@ public class removeMap extends Effect {
 
     @Override
     protected void execute(Event event) {
-        Manager map = Manager.maps.get(name.getSingle(event));
-        map.Remove();
-        Manager.maps.remove(name.getSingle(event));
-
+        BotManager botManager = new BotManager();
+        botManager.Create(name.getSingle(event), token.getSingle(event));
     }
 }

@@ -1,6 +1,6 @@
-package SkHoneybee.Elements.Effects;
+package SkHoneybee.Elements.Maps.Effects;
 
-import SkHoneybee.Manager;
+import SkHoneybee.MapManager;
 import ch.njol.skript.Skript;
 import ch.njol.skript.lang.Effect;
 import ch.njol.skript.lang.Expression;
@@ -13,7 +13,7 @@ import org.jetbrains.annotations.Nullable;
 public class createMap extends Effect {
 
     static {
-        Skript.registerEffect(createMap.class, "create map named %string%");
+        Skript.registerEffect(createMap.class, "create map [named] %string%");
     }
 
     private Expression<String> name;
@@ -33,7 +33,7 @@ public class createMap extends Effect {
     @Override
     protected void execute(Event event) {
         String name = this.name.getSingle(event);
-        Manager manager = new Manager();
-        manager.Create(name);
+        MapManager mapManager = new MapManager();
+        mapManager.Create(name);
     }
 }

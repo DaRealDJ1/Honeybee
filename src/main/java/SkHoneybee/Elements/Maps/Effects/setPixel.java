@@ -1,29 +1,20 @@
-package SkHoneybee.Elements.Effects;
+package SkHoneybee.Elements.Maps.Effects;
 
-import SkHoneybee.Manager;
+import SkHoneybee.MapManager;
 import ch.njol.skript.Skript;
-import ch.njol.skript.classes.data.BukkitClasses;
 import ch.njol.skript.lang.Effect;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser;
 import ch.njol.skript.util.ColorRGB;
-import ch.njol.skript.util.Direction;
-import ch.njol.skript.util.SkriptColor;
 import ch.njol.util.Kleenean;
-import org.bukkit.Location;
-import org.bukkit.World;
-import org.bukkit.block.BlockFace;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
 import org.bukkit.event.Event;
 import org.jetbrains.annotations.Nullable;
 
 import java.awt.*;
-import java.util.HashMap;
 
 public class setPixel extends Effect {
     static {
-        Skript.registerEffect(setPixel.class, "Set pixel [at] %number%, %number% of [map] [named] %string% to %color%");
+        Skript.registerEffect(setPixel.class, "Set pixel [at] %number%,[ ]%number% of [map] [named] %string% to %color%");
     }
 
     private Expression<Number> x;
@@ -47,12 +38,12 @@ public class setPixel extends Effect {
 
     @Override
     protected void execute(Event event) {
-        Manager manager = Manager.maps.get(this.name.getSingle(event));
+        MapManager mapManager = MapManager.maps.get(this.name.getSingle(event));
         int r = this.colour.getSingle(event).asBukkitColor().getRed();
         int g = this.colour.getSingle(event).asBukkitColor().getGreen();
         int b = this.colour.getSingle(event).asBukkitColor().getBlue();
         Color colour = new Color(r, g, b);
-        manager.SetPixel(this.x.getSingle(event).intValue(), this.y.getSingle(event).intValue(), colour);
+        mapManager.SetPixel(this.x.getSingle(event).intValue(), this.y.getSingle(event).intValue(), colour);
 
     }
 }

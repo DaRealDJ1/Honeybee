@@ -1,6 +1,7 @@
 name: SkHoneybee
 version: '${project.version}'
 main: SkHoneybee.Honey
+description: A weird plugin innit
 depend:
   - Skript
 

@@ -1,8 +1,9 @@
 package SkHoneybee;
 
-import SkHoneybee.Events.mapEvent;
+import SkHoneybee.Events.PlayerClickEvent;
 import ch.njol.skript.Skript;
 import ch.njol.skript.SkriptAddon;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
@@ -18,7 +19,7 @@ public final class Honey extends JavaPlugin {
         addon = Skript.registerAddon(this);
         // Plugin startup logic
         getLogger().info("Honeybee is now enabled!");
-        getServer().getPluginManager().registerEvents(new mapEvent(), this);
+        getServer().getPluginManager().registerEvents(new PlayerClickEvent(), this);
 
         try {
             //This will register all our syntax for us. Explained below
@@ -30,22 +31,26 @@ public final class Honey extends JavaPlugin {
         // loop all files in the folder
         File f = new File("plugins/SkHoneybee/Maps");
         File[] matchingFiles = f.listFiles();
-        for (File file : matchingFiles) {
-            Manager manager = new Manager();
-            try {
-                manager.Load(file.getName());
-            } catch (IOException e) {
-                throw new RuntimeException(e);
+        try {
+            for (File file : matchingFiles) {
+                MapManager mapManager = new MapManager();
+                try {
+                    mapManager.Load(file.getName());
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
             }
+        } catch (NullPointerException e) {
+            System.out.println("No maps found");
         }
     }
 
     @Override
     public void onDisable() {
-        HashMap<String, Manager> maps = Manager.maps;
+        HashMap<String, MapManager> maps = MapManager.maps;
         for (String name : maps.keySet()) {
-            Manager manager = maps.get(name);
-            manager.Save();
+            MapManager mapManager = maps.get(name);
+            mapManager.Save();
         }
     }
 }

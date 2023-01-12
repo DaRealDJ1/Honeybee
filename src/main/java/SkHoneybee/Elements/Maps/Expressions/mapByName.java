@@ -1,6 +1,6 @@
-package SkHoneybee.Elements.Expressions;
+package SkHoneybee.Elements.Maps.Expressions;
 
-import SkHoneybee.Manager;
+import SkHoneybee.MapManager;
 import ch.njol.skript.Skript;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.ExpressionType;
@@ -43,6 +43,6 @@ public class mapByName extends SimpleExpression<ItemStack> {
     @Override
     @Nullable
     protected ItemStack[] get(Event e) {
-        return new ItemStack[]{Manager.maps.get(server.getSingle(e)).item()};
+        return new ItemStack[]{MapManager.maps.get(server.getSingle(e)).item()};
     }
 }

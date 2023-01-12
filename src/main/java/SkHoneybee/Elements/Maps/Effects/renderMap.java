@@ -1,23 +1,20 @@
-package SkHoneybee.Elements.Effects;
+package SkHoneybee.Elements.Maps.Effects;
 
-import SkHoneybee.Manager;
+import SkHoneybee.MapManager;
 import ch.njol.skript.Skript;
 import ch.njol.skript.lang.Effect;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser;
 import ch.njol.skript.util.Direction;
 import ch.njol.util.Kleenean;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.jetbrains.annotations.Nullable;
 
-import java.nio.channels.FileChannel;
 import java.util.HashMap;
 
 public class renderMap extends Effect {
@@ -49,8 +46,8 @@ public class renderMap extends Effect {
         Location loc = location.getSingle(event).getBlock().getRelative(face).getLocation();
         String name = this.name.getSingle(event);
         World world = loc.getWorld();
-        HashMap<String, Manager> maps = Manager.maps;
-        Manager manager = maps.get(name);
+        HashMap<String, MapManager> maps = MapManager.maps;
+        MapManager mapManager = maps.get(name);
 
         Entity map = world.spawnEntity(loc, EntityType.ITEM_FRAME);
 

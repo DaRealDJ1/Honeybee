@@ -1,15 +1,13 @@
-package SkHoneybee.Elements.Effects;
+package SkHoneybee.Elements.Maps.Effects;
 
-import SkHoneybee.Manager;
+import SkHoneybee.MapManager;
 import ch.njol.skript.Skript;
 import ch.njol.skript.lang.Effect;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser;
 import ch.njol.skript.util.ColorRGB;
-import ch.njol.skript.util.SkriptColor;
 import ch.njol.util.Kleenean;
 import org.bukkit.event.Event;
-import org.bukkit.inventory.meta.MapMeta;
 import org.jetbrains.annotations.Nullable;
 
 import java.awt.*;
@@ -37,7 +35,7 @@ public class backgroundColour extends Effect {
 
     @Override
     protected void execute(Event event) {
-        Manager map = Manager.maps.get(name.getSingle(event));
+        MapManager map = MapManager.maps.get(name.getSingle(event));
         // loop 127 times twice
         int r = colour.getSingle(event).asBukkitColor().getRed();
         int g = colour.getSingle(event).asBukkitColor().getGreen();
