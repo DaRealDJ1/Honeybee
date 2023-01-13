@@ -19,7 +19,7 @@ public final class Honey extends JavaPlugin {
         addon = Skript.registerAddon(this);
         // Plugin startup logic
         getLogger().info("Honeybee is now enabled!");
-        getServer().getPluginManager().registerEvents(new PlayerClickEvent(), this);
+        this.getServer().getPluginManager().registerEvents(new PlayerClickEvent(), this);
 
         try {
             //This will register all our syntax for us. Explained below

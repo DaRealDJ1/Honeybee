@@ -19,6 +19,7 @@ public class MapManager implements Serializable {
     // serilization id for this class = 1
     private static final long serialVersionUID = 6L;
     public static HashMap<String, MapManager> maps = new HashMap<String, MapManager>();
+    public static HashMap<Number, String> mapsById = new HashMap<Number, String>();
     public String name;
     public int id = 0;
     public HashMap<String, Color> pixels;
@@ -57,6 +58,7 @@ public class MapManager implements Serializable {
         } else {
             mapView = Bukkit.getMap((short) id);
         }
+        mapsById.put(mapView.getId(), name);
         mapView.getRenderers().clear();
         final int[] i = {0};
         mapView.addRenderer(new MapRenderer() {
@@ -82,6 +84,7 @@ public class MapManager implements Serializable {
         });
         mapMeta.setMapView(mapView);
         mapItem.setItemMeta(mapMeta);
+        mapItem.setDurability((short) mapView.getId());
         for (Player p : Bukkit.getOnlinePlayers()) {
             p.getInventory().addItem(mapItem);
         }
