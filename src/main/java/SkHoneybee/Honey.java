@@ -47,7 +47,7 @@ public final class Honey extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        HashMap<String, MapManager> maps = MapManager.maps;
+        HashMap<String, MapManager> maps = MapManager.maps;//
         for (String name : maps.keySet()) {
             MapManager mapManager = maps.get(name);
             mapManager.Save();
