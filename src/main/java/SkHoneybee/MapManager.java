@@ -85,9 +85,6 @@ public class MapManager implements Serializable {
         mapMeta.setMapView(mapView);
         mapItem.setItemMeta(mapMeta);
         mapItem.setDurability((short) mapView.getId());
-        for (Player p : Bukkit.getOnlinePlayers()) {
-            p.getInventory().addItem(mapItem);
-        }
         id = mapView.getId();
         try {
             unserializable.put("Item", mapItem);

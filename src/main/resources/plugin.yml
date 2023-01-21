@@ -1,5 +1,5 @@
 name: SkHoneybee
-version: '1.4.0'
+version: '1.4.1'
 main: SkHoneybee.Honey
 description: A weird plugin innit
 depend:
