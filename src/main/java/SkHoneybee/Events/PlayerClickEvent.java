@@ -36,7 +36,6 @@ public class PlayerClickEvent implements Listener {
         // if b is null
         ItemFrame frame = null;
         if (b != null) {
-            Bukkit.broadcastMessage("E222");
             // get block
             Block block = b;
             // get target block
@@ -76,9 +75,6 @@ public class PlayerClickEvent implements Listener {
         // get map from id
         id = item.getDurability();
         String name = SkHoneybee.MapManager.mapsById.get(id);
-        Bukkit.broadcastMessage("Frame: " + frame);
-        Bukkit.broadcastMessage("ID: " + id);
-        Bukkit.broadcastMessage("ITEM: " + item);
         // get map-id
         Bukkit.getPluginManager().callEvent(new Custom(p, x, z, name, id));
     }

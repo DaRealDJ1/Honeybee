@@ -13,6 +13,7 @@ import java.util.HashMap;
 public final class Honey extends JavaPlugin {
     Honey instance;
     SkriptAddon addon;
+
     @Override
     public void onEnable() {
         instance = this;
